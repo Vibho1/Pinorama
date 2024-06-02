@@ -10,6 +10,7 @@ async function getAllPosts(req, res) {
 
 async function uploadedPost(req, res) {
   const { id, caption, image } = req.body;
+  const banned = ["Gali", "Lassi", "Chitkara","gali", "lassi", "chitkara"];
 
   try {
     const user = await userModel.findById(id);
@@ -20,6 +21,12 @@ async function uploadedPost(req, res) {
         caption: caption,
         user: user,
       });
+
+      if(banned.includes(caption)){
+        return res.status(400).send("Invalid Caption!!!! ");
+      }
+      
+
       await user.posts.push(post._id);
       await user.save();
       res.status(200).send("post saved!");
@@ -122,11 +129,47 @@ async function getPost(req, res) {
   }
 }
 
+async function deleteComment(req, res) {
+  const postId = req.body.postId;
+  const userId = req.body.userId;
+  const commentId = req.body.commentId;
+
+  
+
+  try {
+    const post = await postModel.findById(postId);
+    if(!post){
+      return res.status(404).send('post not found');
+    }
+
+    const comment =  await post.comments.find(comment => comment.id === commentId);
+
+    if(!comment){
+      return res.status(404).send('comment not found');
+    }
+    console.log(comment,userId);
+
+    if (comment.user.toString() !== userId) {
+      console.log('Unauthorized');
+      return res.status(400).send('User unauthorized to perform this action!!');
+    }
+    
+    await post.comments.pull(comment);
+    await post.save();
+    res.status(200).send('Comment deleted!')
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+}
+
 module.exports = {
   getAllPosts,
   uploadedPost,
   likePost,
   deletePost,
   postComment,
-  getPost
+  getPost,
+  deleteComment
 };

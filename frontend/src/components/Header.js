@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { FiHome, FiSearch, FiUser, FiLogOut,FiMessageCircle } from "react-icons/fi";
+import { FiHome, FiSearch, FiUser, FiLogOut, FiMessageCircle } from "react-icons/fi";
 
 export default function Header({ handleLogout }) {
   return (
@@ -44,14 +44,6 @@ export default function Header({ handleLogout }) {
                 <FiUser />
               </NavLink>
             </li>
-            {/* <li>
-              <NavLink
-                to="/chat"
-                className={`block py-2 pl-3 pr-4  md:hover:text-red-600 md:p-0 `}
-              >
-                <FiMessageCircle />
-              </NavLink>
-            </li> */}
             <li>
               <button
                 className="block py-2 pl-3 pr-4  md:hover:text-red-600 md:p-0 text-red-800"

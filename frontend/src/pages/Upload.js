@@ -47,7 +47,7 @@ export default function Upload({ setCount, loggedUser, setShowUploadModal }) {
           toast.success("Post uploaded", { position: "bottom-center" });
           setCount((count) => count + 1);
         } catch (error) {
-          toast.error("Upload unsuccessful", { position: "bottom-center" });
+          toast.error(error.response.data, { position: "bottom-center" });
         }
 
         setSelectedFile(null);

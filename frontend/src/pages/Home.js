@@ -32,7 +32,7 @@ export default function Home({ users, count, loggedUser, setCount }) {
                 className="w-10 h-10 object-cover rounded-full mr-3"
               />
               <div>
-                <p className="font-semibold">{user.username}</p>
+                <p className="font-semibold">{user.fullname}</p>
                 <p className="text-sm w-full text-gray-500">
                   Search this user for more content
                 </p>
@@ -49,15 +49,15 @@ export default function Home({ users, count, loggedUser, setCount }) {
           scrollbarColor: "transparent transparent",
         }}
       >
-        {posts.map((post, index) => (
-          <Card
-            key={index}
-            post={post}
-            setCount={setCount}
-            loggedUser={loggedUser}
-            count={count}
-          />
-        ))}
+        {posts.slice().reverse().map((post, index) => (
+            <Card
+              key={index}
+              post={post}
+              setCount={setCount}
+              loggedUser={loggedUser}
+              count={count}
+            />
+          ))}
       </div>
 
       <div className="hidden md:flex flex-col items-center">

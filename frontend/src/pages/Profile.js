@@ -2,11 +2,10 @@ import React from "react";
 import ProfileHeader from "../components/Profile/ProfileHeader";
 import Card from "../components/Profile/Card";
 
-export default function Profile({ user,count, loggedUser, setCount }) {
+export default function Profile({ user, count, loggedUser, setCount }) {
   return (
     <div className="container mx-auto px-4">
       <ProfileHeader user={user} loggedUser={loggedUser} setCount={setCount} />
-
       <div className="flex rounded-xl mt-32 max-h-screen justify-around">
         <div className="hidden md:flex flex-col items-center px-7 overflow-y-auto">
           <div className="p-4 rounded-lg text-black">
@@ -32,27 +31,10 @@ export default function Profile({ user,count, loggedUser, setCount }) {
             )}
           </div>
         </div>
-        <div
-          className="flex flex-col items-center px-7 overflow-y-auto"
-          style={{
-            scrollbarWidth: "none",
-            scrollbarColor: "transparent transparent",
-          }}
-        >
-          {user.posts.length === 0 ? (
-            <p>User hasn't posted anything yet.</p>
-          ) : (
-            user.posts.map((post, index) => (
-              <Card
-                count={count}
-                key={index}
-                post={post}
-                setCount={setCount}
-                loggedUser={loggedUser}
-                user={user}
-              />
-            ))
-          )}
+        <div className="flex flex-col items-center overflow-scroll">
+          {loggedUser.posts.map((post, index) => (
+            <Card loggedUser={loggedUser} user={user} count={count} key={index} post={post} setCount={setCount} />
+          ))}
         </div>
       </div>
     </div>
